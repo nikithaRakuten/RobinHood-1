@@ -4,14 +4,14 @@
         <!-- Details -->
         <div class="ui-details">
           <!-- Name -->
-          <h3 id="name-header">{{userDetail.first_name}} {{userDetail.last_name}}</h3>
+          <!-- <h3 id="name-header">{{userDetail.first_name}} {{userDetail.last_name}}</h3> -->
           <!-- Designation -->
           <h4>My Account</h4>
         </div>
         <!-- Image -->
         <div class="ui-image">
           <!-- User Image -->
-          <img src="https://api.adorable.io/avatars/285/abott@adorable.png" alt="Profile Picture" class="img-responsive" width="100" height="100">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/The_Logo_of_the_Robin_Hood_Army.jpg/220px-The_Logo_of_the_Robin_Hood_Army.jpg" alt="Profile Picture" class="img-responsive" width="100" height="100">
         </div>
       </div>
       <div class="ui-content">
@@ -49,7 +49,12 @@
                   </div>
                 </div>
 
-          
+                <div class="row">
+                    <div class="col-sm-12">
+                      <label for="inputEmail5" class="control-label">Locality:</label>
+                        <input type="text" class="form-control" id="inputEmail5" ng-model="userDetail.locality">
+                    </div>
+                  </div>
 
                 <div class="col-sm-12">
                   <div class="btn-div">
@@ -58,41 +63,7 @@
                 </div>
                 </form>   
             </section>
-			<div class="alert alert-success" ng-show="message!=null">{{message}}</div>
-           
-          <!-- <button ng-click="showLoginInfo = !showLoginInfo">Login Information</button>  -->
-		  <button type="button" class="btn btn-info defaultBckColor colorWhite" ng-click="showLoginInfo = !showLoginInfo">Login Information</button>
-		  <!-- <button type="button" class="btn btn-info defaultBckColor" >Your Orders</button> -->
-		  <button type="button" class="btn btn-info defaultBckColor colorWhite">
-				<a href="#/userOrderHistory" style="color: inherit;text-decoration: none !important;">
-					<i class="icon-ok icon-white" /> Your Orders
-				</a>
-			</button>
-		  <!-- <button type="button" class="btn btn-info defaultBckColor" ng-click="showLoginInfo = !showLoginInfo">Login Information</button> -->
-          <section ng-show="showLoginInfo">
-            <form class="" role="form">
-              <div class="row">
-                <div class="col-sm-12">
-                  <label for="inputEmail31" class="control-label">Password:</label>
-                  <div class="">
-                    <input type="password" class="form-control" id="inputEmail31">
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <label for="inputPassword31" class="control-label">Confirm:</label>
-                  <div class="">
-                    <input type="password" class="form-control" id="inputPassword31">
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="btn-div">
-                    <a href="https://creativethoughtz.com" class="btn btn-success pull-right colorWhite">Update</a>
-                  </div>
-                </div>           
-              </div>
-            </form>  
-          </section>
-
+			      <div class="alert alert-success" ng-show="message!=null">{{message}}</div>
           </div>
           <!-- col-8 -->
         </div>
@@ -138,7 +109,7 @@
     position: relative;
     border-bottom: 2px solid #fff;
     box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
-    background-color: #0bb7b7;
+    background-color: #105f2f;
 }
 /* Details */
 .ui-67 .ui-head .ui-details{

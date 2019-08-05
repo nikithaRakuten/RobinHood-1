@@ -14,7 +14,7 @@
 			
         </div>
     </form>
-    <form ng-show="!showNumber" name="form" ng-submit="otpConfirm()" role="form">
+    <form ng-show="!showNumber" name="form" ng-submit="loginOTPConfirm()" role="form">
         <div class="form-group">
             <label for="otp">OTP</label>
             <input type="text" name="otp" id="otp" class="form-control" ng-model="otp" pattern="[0-9]{6}" maxlength="6" required />

@@ -42,25 +42,28 @@ app.controller("Login", ["$scope", "$firebaseAuth", "$firebaseObject" , "$localS
 			});
 	}
 	
-	$scope.otpConfirm = function(){
+	$scope.loginOTPConfirm = function(){
 		$scope.errorMessage=null;
-		console.log("%%%%%%%%%%%%%%%OTP>>",$scope.otp);
+		// console.log("%%%%%%%%%%%%%%%OTP>>",$scope.otp);
 		var code = $scope.otp;
 		confirmationResult.confirm(code).then(function (result) {
-			console.log(" User signed in successfully.");
+			// console.log(" User signed in successfully.");
 			var user = result.user;
-			console.log("userrrr detail >>",user.uid);
+			// console.log("userrrr detail >>",user.uid);
 			// $scope.userDetail = $firebaseObject(firebase.database().ref().child("profiles").child(user.uid));
-			$scope.userDetail = $firebaseObject(firebase.database().ref().child("profiles").child('wRcVIfiRriOrrAjlCaUrLeFZo5y2'));
+			$scope.userDetail = $firebaseObject(firebase.database().ref().child("profiles").child('qDYMjsTmHAb38OmF2Y92Qn5Sm7M2'));
 			console.log("$scope.userDetail>>>",$scope.userDetail);
-			if ($scope.userDetail.hasOwnProperty('email')) {
-				$scope.errorMessage = "Mobile number not found. Please Register and try again";
-			}else{
+			// if ($scope.userDetail["email"] != undefined) {
 				$localStorage.userDetail=$scope.userDetail;
-				$window.location.href = '#/';
+				// console.log("logged in>>>>>>",$localStorage.userDetail);
+				// console.log("logged in SCOPE>>>>>>",$scope.userDetail);
+				$window.location.href = '#/upcomingDonations';
 				SessionService.setUserAuthenticated(true);
-				window.location.reload(true);
-			}
+				// window.location.reload(true);
+			// }else{
+			// 	console.log("user not found");
+			// 	$scope.errorMessage = "Mobile number not found. Please Register and try again";
+			// }
 			
 			// $scope.userDetail = $firebaseObject(firebase.database().ref().child("profiles").child(user.uid));
 			// $scope.userDetail.$loaded().then(function() {
@@ -126,12 +129,13 @@ app.controller("Login", ["$scope", "$firebaseAuth", "$firebaseObject" , "$localS
 		$scope.message=null;
 		var ref = firebase.database().ref().child("profiles").child($scope.userDetail['$id']);
 		var obj = $firebaseObject(ref);
-		  ref.set({
+		  ref.update({
 			first_name: $scope.userDetail.first_name,
 			mobile: $scope.userDetail.mobile,
 			last_name: $scope.userDetail.last_name,
 			address: $scope.userDetail.address,
-			email: $scope.userDetail.email
+			email: $scope.userDetail.email,
+			locality: $scope.userDetail.locality,
 		});
 		$scope.message='Successfully Updated'
 		$timeout(function () {
@@ -142,7 +146,40 @@ app.controller("Login", ["$scope", "$firebaseAuth", "$firebaseObject" , "$localS
   
   }
 ]);
+app.controller("userDonationDetail", ["$scope", "$firebaseAuth", "$firebaseObject" , "$firebaseArray", "$localStorage" , "$timeout", "$window" , "$route" , "SessionService" ,
+  function($scope, $firebaseAuth ,$firebaseObject, $firebaseArray ,$localStorage, $timeout ,$window,$route,SessionService) {
+		$scope.userDetail = $localStorage.userDetail;
+		console.log("inside donation controller>>>>",$scope.userDetail);
 
+		var don_cat = firebase.database().ref().child("Donation_category");
+		$scope.donationCategory = $firebaseObject(don_cat);
+		$scope.donationCategory.$loaded().then(function() {
+			console.log("$scope.donationCategory>>>>>",$scope.donationCategory);
+		});
+
+		var rha_city = firebase.database().ref().child("RHA_city");
+		$scope.RHACity = $firebaseObject(rha_city);
+		$scope.RHACity.$loaded().then(function() {
+			console.log("$scope.RHACity>>>>>",$scope.RHACity);
+		});
+
+		var dbRef = firebase.database().ref().child("donation_details");
+		// $scope.donationList = $firebaseArray(dbRef);
+		// $scope.donationList.$loaded().then(function() {
+		// 	console.log("$scope.donationList>>>>>",$scope.donationList);
+		// });
+
+		dbRef.orderByChild('userId').equalTo(1).on("value", function(snapshot) {
+			$scope.DonationList = snapshot.val();
+			console.log("$scope.DonationList>>>>>",$scope.DonationList);
+		});
+
+		$scope.redirectFunc = function(page){
+			console.log("redirect page>>>>>>>>>", "'#/"+page+"'");
+			$window.location.href = "#/"+page;
+		}
+	}
+]);
 app.controller("orderDetail", ["$scope", "$firebaseAuth", "$firebaseObject" , "$localStorage" , "$timeout", "$window" , "$route" , "SessionService" ,"$firebaseArray",
   function($scope, $firebaseAuth ,$firebaseObject ,$localStorage, $timeout ,$window,$route,SessionService,$firebaseArray) {
 	if($localStorage.userDetail!=null){
